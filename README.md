@@ -53,7 +53,7 @@ Expense tracker/
 ├── style.css      # Vanilla CSS3 with custom properties, CSS Grid & Flexbox
 ├── script.js      # Clean Vanilla JS (ES6) state management & LocalStorage
 ├── README.md      # Comprehensive open-source onboarding guide
-└── SUBMISSION.md  # Hacktoberfest 2026 challenge entry
+
 ```
 
 ---
