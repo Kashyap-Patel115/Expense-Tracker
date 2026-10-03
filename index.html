@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A modern, beginner-friendly Expense Tracker Web App built with HTML5, CSS3, and Vanilla JavaScript for Hacktoberfest 2026.">
+  <title>Expense Tracker | Hacktoberfest 2026</title>
+  <!-- Google Fonts: Plus Jakarta Sans & Outfit -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- Ambient background glow elements -->
+  <div class="bg-glow bg-glow-1" aria-hidden="true"></div>
+  <div class="bg-glow bg-glow-2" aria-hidden="true"></div>
+
+  <div class="app-container">
+    <!-- Header Section -->
+    <header class="app-header">
+      <div class="header-badge">
+        <span class="pulse-dot"></span>
+        <span>Hacktoberfest 2026 Dev Challenge</span>
+      </div>
+      <div class="brand-title-wrap">
+        <div class="brand-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"></path>
+            <path d="M3 5v14a2 2 0 0 0 2 2h16v-5"></path>
+            <path d="M18 12a2 2 0 0 0 0 4h4v-4Z"></path>
+          </svg>
+        </div>
+        <h1>Daily Expense Tracker</h1>
+      </div>
+      <p class="subtitle">Track your everyday spending, keep your budget balanced, and build good money habits.</p>
+    </header>
+
+    <!-- Hero Total Spent Overview Card -->
+    <section class="total-card" aria-label="Total Expenses Overview">
+      <div class="total-card-decoration" aria-hidden="true"></div>
+      <div class="total-header">
+        <div class="total-title-group">
+          <span class="total-icon-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="1" x2="12" y2="23"></line>
+              <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path>
+            </svg>
+          </span>
+          <span class="total-label">Total Amount Spent</span>
+        </div>
+        <div class="live-status-pill">
+          <span class="status-dot"></span>
+          <span>Live Sync</span>
+        </div>
+      </div>
+
+      <div class="total-amount-display">
+        <span class="total-currency-sign">₹</span>
+        <h2 class="total-amount" id="total-amount">0.00</h2>
+      </div>
+
+      <div class="total-footer">
+        <div class="total-stat-pill">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="3" rx="2"></rect>
+            <path d="M9 12h6"></path>
+            <path d="M12 9v6"></path>
+          </svg>
+          <span id="stat-count">0 Transactions</span>
+        </div>
+        <div class="total-stat-pill date-pill">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+          <span id="current-date-label">All Time</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Add Expense Form Section -->
+    <section class="card form-card" aria-label="Add Expense Section">
+      <div class="card-header">
+        <div>
+          <h2 class="card-title">Add New Expense</h2>
+          <p class="card-desc">Enter transaction details below to record an expense.</p>
+        </div>
+      </div>
+
+      <!-- Error message banner with alert icon -->
+      <div id="error-message" class="error-banner" role="alert" style="display: none;">
+        <svg class="error-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"></circle>
+          <line x1="12" y1="8" x2="12" y2="12"></line>
+          <line x1="12" y1="16" x2="12.01" y2="16"></line>
+        </svg>
+        <span id="error-text">Please enter a valid expense name.</span>
+      </div>
+
+      <form id="expense-form" novalidate onsubmit="addExpense(event); return false;">
+        <div class="form-grid">
+          <!-- Expense Name Field -->
+          <div class="form-group">
+            <label for="expense-name">
+              <span>Expense Name</span>
+              <span class="required">*</span>
+            </label>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z"></path>
+                </svg>
+              </span>
+              <input 
+                type="text" 
+                id="expense-name" 
+                placeholder="e.g., College Canteen Lunch" 
+                autocomplete="off"
+              >
+            </div>
+          </div>
+
+          <!-- Amount Field -->
+          <div class="form-group">
+            <label for="expense-amount">
+              <span>Amount (₹)</span>
+              <span class="required">*</span>
+            </label>
+            <div class="input-wrapper">
+              <span class="input-icon rupee-icon">₹</span>
+              <input 
+                type="number" 
+                id="expense-amount" 
+                placeholder="e.g., 150" 
+                min="0.01" 
+                step="any"
+              >
+            </div>
+          </div>
+
+          <!-- Category Dropdown Field -->
+          <div class="form-group">
+            <label for="expense-category">
+              <span>Category</span>
+              <span class="required">*</span>
+            </label>
+            <div class="input-wrapper select-wrapper">
+              <span class="input-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="7" height="7" x="3" y="3" rx="1"></rect>
+                  <rect width="7" height="7" x="14" y="3" rx="1"></rect>
+                  <rect width="7" height="7" x="14" y="14" rx="1"></rect>
+                  <rect width="7" height="7" x="3" y="14" rx="1"></rect>
+                </svg>
+              </span>
+              <select id="expense-category">
+                <option value="Food">🍽️ Food</option>
+                <option value="Travel">🚌 Travel</option>
+                <option value="Shopping">🛍️ Shopping</option>
+                <option value="Education">📚 Education</option>
+                <option value="Other">🏷️ Other</option>
+              </select>
+              <span class="select-chevron">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="m6 9 6 6 6-6"></path>
+                </svg>
+              </span>
+            </div>
+          </div>
+
+          <!-- Date Field -->
+          <div class="form-group">
+            <label for="expense-date" class="label-with-action">
+              <span>Date <span class="required">*</span></span>
+              <button type="button" id="today-shortcut-btn" class="shortcut-btn" title="Set date to today">Today</button>
+            </label>
+            <div class="input-wrapper">
+              <span class="input-icon">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect width="18" height="18" x="3" y="4" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </span>
+              <input 
+                type="date" 
+                id="expense-date"
+              >
+            </div>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="button" id="add-expense-btn" class="btn btn-primary">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+          <span>Add Expense</span>
+        </button>
+      </form>
+    </section>
+
+    <!-- Expense History Section -->
+    <section class="card list-card" aria-label="Expense History Section">
+      <div class="list-header">
+        <div>
+          <h2 class="card-title">Expense History</h2>
+          <p class="card-desc">All your recorded transactions in one place.</p>
+        </div>
+        <span class="item-count" id="item-count">0 items</span>
+      </div>
+
+      <!-- Friendly Empty State -->
+      <div id="empty-state" class="empty-state">
+        <div class="empty-illustration">
+          <svg width="68" height="68" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="16" y1="13" x2="8" y2="13"></line>
+            <line x1="16" y1="17" x2="8" y2="17"></line>
+            <polyline points="10 9 9 9 8 9"></polyline>
+          </svg>
+        </div>
+        <h3>No expenses recorded yet</h3>
+        <p>Your expense log is currently empty. Fill out the form above to add your first expense!</p>
+      </div>
+
+      <!-- Expenses Table Container -->
+      <div id="table-container" class="table-container" style="display: none;">
+        <table class="expense-table">
+          <thead>
+            <tr>
+              <th>Expense Name</th>
+              <th>Category</th>
+              <th>Date</th>
+              <th class="text-right">Amount</th>
+              <th class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody id="expense-list">
+            <!-- Dynamic rows inserted by JavaScript -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Toast Notification for Actions -->
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+    <!-- Footer Section -->
+    <footer class="app-footer">
+      <div class="footer-tag">Hacktoberfest 2026 • First-Week Dev Challenge</div>
+      <p>Built with <strong>HTML5, CSS3 &amp; Vanilla JavaScript</strong>.</p>
+      <p class="storage-hint">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+          <polyline points="17 21 17 13 7 13 7 21"></polyline>
+          <polyline points="7 3 7 8 15 8"></polyline>
+        </svg>
+        Expenses are automatically saved in your browser's LocalStorage.
+      </p>
+    </footer>
+  </div>
+
+  <!-- JavaScript file -->
+  <script src="script.js"></script>
+</body>
+</html>
