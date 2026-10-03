@@ -128,4 +128,3 @@ This project is tailored for Hacktoberfest 2026 participants:
 ## 📄 License
 
 This project is open-source and free to use for educational purposes under the [MIT License](https://opensource.org/licenses/MIT).
-
