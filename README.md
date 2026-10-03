@@ -111,3 +111,8 @@ This project was developed through an interactive human-in-the-loop pair program
 <!-- Team Submissions: Built solo by a second-year IT engineering student for Hacktoberfest 2026 -->
 
 *Thank you to the DEV Community and the Hacktoberfest team for fostering open-source innovation!*
+
+## 📄 License
+
+This project is open-source and free to use for educational purposes under the [MIT License](https://opensource.org/licenses/MIT).
+
